@@ -45,6 +45,11 @@ class DetailActivity : AppCompatActivity() {
             .into(binding.ivDetailImg)
     }
 
+    override fun onSupportNavigateUp(): Boolean {
+        onBackPressed()
+        return true
+    }
+
     companion object {
         const val EXTRA_MOVIE = "extra_movie"
     }
