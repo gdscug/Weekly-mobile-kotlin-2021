@@ -1,3 +1,8 @@
 <resources>
     <string name="app_name">G-Flix</string>
+
+    <!-- Detail screen-->
+    <string name="rate">5.0</string>
+    <string name="age_rate">18+</string>
+    <string name="genre">Action</string>
 </resources>
