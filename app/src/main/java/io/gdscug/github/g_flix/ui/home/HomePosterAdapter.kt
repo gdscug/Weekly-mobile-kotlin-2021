@@ -4,8 +4,11 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
+import com.bumptech.glide.request.RequestOptions
+import io.gdscug.github.g_flix.R
 import io.gdscug.github.g_flix.data.local.entity.MovieEntity
 import io.gdscug.github.g_flix.databinding.ItemsPosterBinding
+
 
 class HomePosterAdapter : RecyclerView.Adapter<HomePosterAdapter.HomeForYouViewHolder>() {
 
@@ -41,6 +44,8 @@ class HomePosterAdapter : RecyclerView.Adapter<HomePosterAdapter.HomeForYouViewH
             with(binding) {
                 Glide.with(itemView.context)
                     .load(movie.moviePoster)
+                    .apply(RequestOptions.placeholderOf(R.drawable.ic_loading))
+                    .error(R.drawable.ic_broken_image)
                     .centerCrop()
                     .into(ivPoster)
                 itemView.setOnClickListener { itemClicked.invoke() }
