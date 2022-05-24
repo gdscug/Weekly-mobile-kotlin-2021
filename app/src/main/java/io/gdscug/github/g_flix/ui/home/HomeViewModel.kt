@@ -1,9 +1,10 @@
 package io.gdscug.github.g_flix.ui.home
 
+import androidx.lifecycle.LiveData
 import androidx.lifecycle.ViewModel
+import io.gdscug.github.g_flix.data.GFlixRepository
 import io.gdscug.github.g_flix.data.local.entity.MovieEntity
-import io.gdscug.github.g_flix.utils.dummy.MovieDummy
 
-class HomeViewModel : ViewModel() {
-    fun getMovies(): List<MovieEntity> = MovieDummy.generateMovieDummy()
+class HomeViewModel(private val gFlixRepository: GFlixRepository) : ViewModel() {
+    fun getMovies(): LiveData<List<MovieEntity>> = gFlixRepository.getAllMovies()
 }
