@@ -11,6 +11,8 @@ class HomePosterAdapter : RecyclerView.Adapter<HomePosterAdapter.HomeForYouViewH
 
     private lateinit var binding: ItemsPosterBinding
 
+    var onItemClickCallback: OnItemClickCallback? = null
+
     private val listMovie = ArrayList<MovieEntity>()
 
     fun setMovies(movies: List<MovieEntity>?) {
@@ -26,20 +28,27 @@ class HomePosterAdapter : RecyclerView.Adapter<HomePosterAdapter.HomeForYouViewH
 
     override fun onBindViewHolder(holder: HomeForYouViewHolder, position: Int) {
         val movie = listMovie[position]
-        holder.bind(movie)
+        holder.bind(movie) {
+            onItemClickCallback?.onItemClicked(movie)
+        }
     }
 
     override fun getItemCount(): Int = listMovie.size
 
     class HomeForYouViewHolder(private val binding: ItemsPosterBinding) :
         RecyclerView.ViewHolder(binding.root) {
-        fun bind(movie: MovieEntity) {
+        fun bind(movie: MovieEntity, itemClicked: () -> Unit) {
             with(binding) {
                 Glide.with(itemView.context)
                     .load(movie.moviePoster)
                     .centerCrop()
                     .into(ivPoster)
+                itemView.setOnClickListener { itemClicked.invoke() }
             }
         }
+    }
+
+    interface OnItemClickCallback {
+        fun onItemClicked(movie: MovieEntity)
     }
 }

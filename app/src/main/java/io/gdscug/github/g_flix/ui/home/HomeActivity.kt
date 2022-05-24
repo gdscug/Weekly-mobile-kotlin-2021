@@ -1,13 +1,16 @@
 package io.gdscug.github.g_flix.ui.home
 
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.PagerSnapHelper
+import io.gdscug.github.g_flix.data.MovieEntity
 import io.gdscug.github.g_flix.databinding.ActivityHomeBinding
 import io.gdscug.github.g_flix.databinding.ContentHomeBinding
+import io.gdscug.github.g_flix.ui.detail.DetailActivity
 import io.gdscug.github.g_flix.utils.recycleview.LinearPageIndicatorDecoration
 import io.gdscug.github.g_flix.utils.recycleview.SpaceBetweenItem
 
@@ -34,6 +37,17 @@ class HomeActivity : AppCompatActivity() {
         // Limit caraousel to 5 items
         homeCaraouselAdapter.setMovies(movies.subList(0, 5))
 
+        //Caraousel move to detail
+        homeCaraouselAdapter.onItemClickCallback =
+            object : HomeCaraouselAdapter.OnItemClickCallback {
+                override fun onItemClicked(movie: MovieEntity) {
+                    Intent(
+                        this@HomeActivity,
+                        DetailActivity::class.java
+                    ).apply { startActivity(this) }
+                }
+            }
+
         with(contentHomeBinding.rvCarouselHome) {
             // Horizontal Scroll
             layoutManager = LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
@@ -52,6 +66,13 @@ class HomeActivity : AppCompatActivity() {
         val homeForYouAdapter = HomePosterAdapter()
         homeForYouAdapter.setMovies(movies.subList(0, 8))
 
+        // ForYou move to detail
+        homeForYouAdapter.onItemClickCallback = object : HomePosterAdapter.OnItemClickCallback {
+            override fun onItemClicked(movie: MovieEntity) {
+                Intent(this@HomeActivity, DetailActivity::class.java).apply { startActivity(this) }
+            }
+        }
+
         with(contentHomeBinding.rvForYouHome) {
             // Horizontal Scroll
             layoutManager = LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
@@ -69,6 +90,13 @@ class HomeActivity : AppCompatActivity() {
         // All Movies
         val AllMoviesAdapter = HomePosterAdapter()
         AllMoviesAdapter.setMovies(movies)
+
+        // All Movies move to detail
+        AllMoviesAdapter.onItemClickCallback = object : HomePosterAdapter.OnItemClickCallback {
+            override fun onItemClicked(movie: MovieEntity) {
+                Intent(this@HomeActivity, DetailActivity::class.java).apply { startActivity(this) }
+            }
+        }
 
         with(contentHomeBinding.rvAllMovies) {
             // Snap it!
