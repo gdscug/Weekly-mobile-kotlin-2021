@@ -4,7 +4,7 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
-import io.gdscug.github.g_flix.data.MovieEntity
+import io.gdscug.github.g_flix.data.local.entity.MovieEntity
 import io.gdscug.github.g_flix.databinding.ItemsPosterBinding
 
 class HomePosterAdapter : RecyclerView.Adapter<HomePosterAdapter.HomeForYouViewHolder>() {

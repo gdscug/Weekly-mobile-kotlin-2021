@@ -4,10 +4,9 @@ import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import androidx.lifecycle.ViewModelProvider
-import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.PagerSnapHelper
-import io.gdscug.github.g_flix.data.MovieEntity
+import io.gdscug.github.g_flix.data.local.entity.MovieEntity
 import io.gdscug.github.g_flix.databinding.ActivityHomeBinding
 import io.gdscug.github.g_flix.databinding.ContentHomeBinding
 import io.gdscug.github.g_flix.ui.detail.DetailActivity

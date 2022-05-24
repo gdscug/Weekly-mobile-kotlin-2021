@@ -1,4 +1,4 @@
-package io.gdscug.github.g_flix.data
+package io.gdscug.github.g_flix.data.local.entity
 
 import android.os.Parcelable
 import kotlinx.parcelize.Parcelize

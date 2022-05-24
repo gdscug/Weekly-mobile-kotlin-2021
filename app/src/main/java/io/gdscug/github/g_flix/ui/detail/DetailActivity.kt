@@ -4,7 +4,7 @@ import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import com.bumptech.glide.Glide
 import io.gdscug.github.g_flix.R
-import io.gdscug.github.g_flix.data.MovieEntity
+import io.gdscug.github.g_flix.data.local.entity.MovieEntity
 import io.gdscug.github.g_flix.databinding.ActivityDetailBinding
 import io.gdscug.github.g_flix.databinding.ContentDetailBinding
 

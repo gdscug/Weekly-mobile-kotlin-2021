@@ -1,6 +1,6 @@
 package io.gdscug.github.g_flix.utils.dummy
 
-import io.gdscug.github.g_flix.data.MovieEntity
+import io.gdscug.github.g_flix.data.local.entity.MovieEntity
 
 object MovieDummy {
     fun generateMovieDummy(): List<MovieEntity> {
