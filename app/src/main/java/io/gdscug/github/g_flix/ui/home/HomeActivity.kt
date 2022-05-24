@@ -8,6 +8,7 @@ import androidx.recyclerview.widget.PagerSnapHelper
 import io.gdscug.github.g_flix.databinding.ActivityHomeBinding
 import io.gdscug.github.g_flix.databinding.ContentHomeBinding
 import io.gdscug.github.g_flix.utils.recycleview.LinearPageIndicatorDecoration
+import io.gdscug.github.g_flix.utils.recycleview.SpaceBetweenItem
 
 class HomeActivity : AppCompatActivity() {
     private lateinit var binding: ActivityHomeBinding
@@ -44,6 +45,24 @@ class HomeActivity : AppCompatActivity() {
             addItemDecoration(LinearPageIndicatorDecoration())
 
             adapter = homeCaraouselAdapter
+        }
+
+        // ForYou adapter
+        val homeForYouAdapter = HomePosterAdapter()
+        homeForYouAdapter.setMovies(movies.subList(0, 8))
+
+        with(contentHomeBinding.rvForYouHome) {
+            // Horizontal Scroll
+            layoutManager = LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
+
+            // Snap it!
+            PagerSnapHelper().attachToRecyclerView(this)
+            setHasFixedSize(true)
+
+            // space between item
+            addItemDecoration(SpaceBetweenItem(16))
+
+            adapter = homeForYouAdapter
         }
     }
 }
