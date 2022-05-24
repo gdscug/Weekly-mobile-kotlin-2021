@@ -5,6 +5,7 @@ import androidx.lifecycle.MutableLiveData
 import io.gdscug.github.g_flix.data.local.entity.MovieEntity
 import io.gdscug.github.g_flix.data.remote.RemoteDataSource
 import io.gdscug.github.g_flix.data.remote.response.MovieResponse
+import io.gdscug.github.g_flix.data.remote.response.RecommendationResponse
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -50,5 +51,39 @@ class GFlixRepository private constructor(private val remoteDataSource: RemoteDa
             }
         })
         return movies
+    }
+
+    override fun getMovieRecomendation(id: String): LiveData<List<MovieEntity>> {
+        val moviesRecomendation = MutableLiveData<List<MovieEntity>>()
+
+        remoteDataSource.getMovieRecomendation(id)
+            .enqueue(object : Callback<RecommendationResponse> {
+                override fun onResponse(
+                    call: Call<RecommendationResponse>,
+                    response: Response<RecommendationResponse>
+                ) {
+                    if (response.isSuccessful) {
+                        response.body()?.let { callback ->
+                            val movieList = arrayListOf<MovieEntity>()
+                            for (result in callback.recommendations!!) {
+                                movieList.add(
+                                    MovieEntity(
+                                        result?.movieId,
+                                        result?.movieTitle,
+                                        result?.posterUrl,
+                                        result?.description
+                                    )
+                                )
+                            }
+                            moviesRecomendation.postValue(movieList)
+                        }
+                    }
+                }
+
+                override fun onFailure(call: Call<RecommendationResponse>, t: Throwable) {
+                    t.printStackTrace()
+                }
+            })
+        return moviesRecomendation
     }
 }
