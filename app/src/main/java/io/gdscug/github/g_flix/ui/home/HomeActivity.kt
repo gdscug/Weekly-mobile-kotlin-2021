@@ -1,8 +1,8 @@
 package io.gdscug.github.g_flix.ui.home
 
 import android.content.Intent
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.PagerSnapHelper
@@ -10,6 +10,7 @@ import io.gdscug.github.g_flix.data.local.entity.MovieEntity
 import io.gdscug.github.g_flix.databinding.ActivityHomeBinding
 import io.gdscug.github.g_flix.databinding.ContentHomeBinding
 import io.gdscug.github.g_flix.ui.detail.DetailActivity
+import io.gdscug.github.g_flix.utils.ViewModelFactory
 import io.gdscug.github.g_flix.utils.recycleview.LinearPageIndicatorDecoration
 import io.gdscug.github.g_flix.utils.recycleview.SpaceBetweenItem
 
@@ -27,14 +28,17 @@ class HomeActivity : AppCompatActivity() {
         setSupportActionBar(binding.toolbar)
 
         // viewModel
-        val viewModel = ViewModelProvider(this).get(HomeViewModel::class.java)
-        val movies = viewModel.getMovies()
+        val factory = ViewModelFactory.getInstance()
+        val viewModel = ViewModelProvider(this, factory).get(HomeViewModel::class.java)
 
         // Caraousel adapter
         val homeCaraouselAdapter = HomeCaraouselAdapter()
 
         // Limit caraousel to 5 items
-        homeCaraouselAdapter.setMovies(movies.subList(0, 5))
+        viewModel.getMovies().observe(this) { movies ->
+            homeCaraouselAdapter.setMovies(movies.subList(0, 5))
+            homeCaraouselAdapter.notifyDataSetChanged()
+        }
 
         //Caraousel move to detail
         homeCaraouselAdapter.onItemClickCallback =
@@ -66,7 +70,10 @@ class HomeActivity : AppCompatActivity() {
 
         // ForYou adapter
         val homeForYouAdapter = HomePosterAdapter()
-        homeForYouAdapter.setMovies(movies.subList(0, 8))
+        viewModel.getMovieRecomendation().observe(this) { movies ->
+            homeForYouAdapter.setMovies(movies)
+            homeForYouAdapter.notifyDataSetChanged()
+        }
 
         // ForYou move to detail
         homeForYouAdapter.onItemClickCallback = object : HomePosterAdapter.OnItemClickCallback {
@@ -94,7 +101,10 @@ class HomeActivity : AppCompatActivity() {
 
         // All Movies
         val AllMoviesAdapter = HomePosterAdapter()
-        AllMoviesAdapter.setMovies(movies)
+        viewModel.getMovies().observe(this) { movies ->
+            AllMoviesAdapter.setMovies(movies)
+            AllMoviesAdapter.notifyDataSetChanged()
+        }
 
         // All Movies move to detail
         AllMoviesAdapter.onItemClickCallback = object : HomePosterAdapter.OnItemClickCallback {
