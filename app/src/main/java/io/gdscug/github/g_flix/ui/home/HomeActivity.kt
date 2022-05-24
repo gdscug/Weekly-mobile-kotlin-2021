@@ -3,6 +3,7 @@ package io.gdscug.github.g_flix.ui.home
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import androidx.lifecycle.ViewModelProvider
+import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.PagerSnapHelper
 import io.gdscug.github.g_flix.databinding.ActivityHomeBinding
@@ -63,6 +64,21 @@ class HomeActivity : AppCompatActivity() {
             addItemDecoration(SpaceBetweenItem(16))
 
             adapter = homeForYouAdapter
+        }
+
+        // All Movies
+        val AllMoviesAdapter = HomePosterAdapter()
+        AllMoviesAdapter.setMovies(movies)
+
+        with(contentHomeBinding.rvAllMovies) {
+            // Snap it!
+            PagerSnapHelper().attachToRecyclerView(this)
+            setHasFixedSize(true)
+
+            // space between column
+            addItemDecoration(SpaceBetweenItem(16, true))
+
+            adapter = AllMoviesAdapter
         }
     }
 }
