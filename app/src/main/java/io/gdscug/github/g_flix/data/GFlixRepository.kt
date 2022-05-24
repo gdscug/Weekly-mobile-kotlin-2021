@@ -12,6 +12,16 @@ import retrofit2.Response
 class GFlixRepository private constructor(private val remoteDataSource: RemoteDataSource) :
     GFlixDataSource {
 
+    companion object {
+        @Volatile
+        private var instance: GFlixRepository? = null
+
+        fun getInstance(remoteDataSource: RemoteDataSource): GFlixRepository =
+            instance ?: synchronized(this) {
+                instance ?: GFlixRepository(remoteDataSource)
+            }
+    }
+
     override fun getAllMovies(): LiveData<List<MovieEntity>> {
         val movies = MutableLiveData<List<MovieEntity>>()
 
