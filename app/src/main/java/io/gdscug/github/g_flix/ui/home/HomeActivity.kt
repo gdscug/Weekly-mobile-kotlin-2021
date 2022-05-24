@@ -44,7 +44,10 @@ class HomeActivity : AppCompatActivity() {
                     Intent(
                         this@HomeActivity,
                         DetailActivity::class.java
-                    ).apply { startActivity(this) }
+                    ).apply {
+                        putExtra(DetailActivity.EXTRA_MOVIE, movie)
+                        startActivity(this)
+                    }
                 }
             }
 
@@ -69,7 +72,10 @@ class HomeActivity : AppCompatActivity() {
         // ForYou move to detail
         homeForYouAdapter.onItemClickCallback = object : HomePosterAdapter.OnItemClickCallback {
             override fun onItemClicked(movie: MovieEntity) {
-                Intent(this@HomeActivity, DetailActivity::class.java).apply { startActivity(this) }
+                Intent(this@HomeActivity, DetailActivity::class.java).apply {
+                    putExtra(DetailActivity.EXTRA_MOVIE, movie)
+                    startActivity(this)
+                }
             }
         }
 
@@ -94,7 +100,10 @@ class HomeActivity : AppCompatActivity() {
         // All Movies move to detail
         AllMoviesAdapter.onItemClickCallback = object : HomePosterAdapter.OnItemClickCallback {
             override fun onItemClicked(movie: MovieEntity) {
-                Intent(this@HomeActivity, DetailActivity::class.java).apply { startActivity(this) }
+                Intent(this@HomeActivity, DetailActivity::class.java).apply {
+                    putExtra(DetailActivity.EXTRA_MOVIE, movie)
+                    startActivity(this)
+                }
             }
         }
 
